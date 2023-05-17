@@ -155,7 +155,12 @@ int CliClass::getCmd (void)
       break;
   }
 
-  return EXIT_FAILURE;
+  if (-1 == (int)c) {
+    return EXIT_FAILURE;
+  }
+  else {
+    return EXIT_SUCCESS;
+  }
 }
 
 
