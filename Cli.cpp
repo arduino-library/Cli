@@ -81,6 +81,16 @@ int CliClass::getCmd (void)
 
   c = (char)(xgetchar() & 0x000000FF);
 
+  // Echo
+  if (-1 != (int)c) {
+    if (c == '\n' || c == '\r') {
+      xprintf("\r\n");
+    }
+    else {
+      xputchar(c);
+    }
+  }
+
   switch (state) {
 
     case START:
@@ -155,12 +165,7 @@ int CliClass::getCmd (void)
       break;
   }
 
-  if (-1 == (int)c) {
-    return EXIT_FAILURE;
-  }
-  else {
-    return EXIT_SUCCESS;
-  }
+  return EXIT_SUCCESS;
 }
 
 
