@@ -60,7 +60,7 @@ int CliClass::newCmd (const char *name, const char *description, int(*function)(
   if (!initialized) return EXIT_FAILURE;
 
   if (this->numCmds >= CLI_NUM_CMD) {
-    xprintf("OVF!\r\n");
+    Serial.println(F("OVF!"));
     return EXIT_FAILURE;
   }
 
@@ -84,7 +84,7 @@ int CliClass::getCmd (void)
   // Echo
   if (-1 != (int)c) {
     if (c == '\n' || c == '\r') {
-      xprintf("\r\n");
+      xputs("");
     }
     else {
       xputchar(c);
@@ -197,8 +197,8 @@ void CliClass::showHelp (void)
   // Sort commands in alphabetical order
   //sortCmds ();
 
-  Cli.xputs ("");
-  xprintf("Commands:\r\n");
+  xputs ("");
+  Serial.println(F("Commands:"));
 
   // Display commands
   for (i = 0; (i < numCmds) && (i < CLI_NUM_CMD); i++) {
@@ -211,11 +211,11 @@ void CliClass::showHelp (void)
     for (j = 0; (j < this->numCmds) && (j < CLI_NUM_CMD); j++) {
       if ((this->cmd[j].fct == cmd[i]->fct) && (strcmp(this->cmd[j].str, cmd[i]->str) != 0)) {
         if (!duplicate) {
-          xprintf(" (");
+          Serial.print(F(" ("));
           len += 2;
         }
         else {
-          xprintf(", ");
+          Serial.print(F(", "));
           len += 2;
         }
         xprintf(this->cmd[j].str);
@@ -225,18 +225,18 @@ void CliClass::showHelp (void)
     }
 
     if (duplicate) {
-      xprintf(")");
+      Serial.print(")");
       len += 1;
     }
 
     textPadding(' ', INDENT - len - 2);
-    xprintf(": ");
+    Serial.print(F(": "));
     textPrintBlock(cmd[i]->doc, TEXT_LINE_SIZE, INDENT);
   }
 
-  xprintf("  h");
+  Serial.print(F("  h"));
   textPadding(' ', INDENT - 3 - 2);
-  xprintf(": ");
+  Serial.print(F(": "));
   textPrintBlock("Help", TEXT_LINE_SIZE, INDENT);
   xputs("");
 }
@@ -326,7 +326,7 @@ void CliClass::xprintf (const char *fmt, ... ){
 void CliClass::xputs (const char *c){
   if (!initialized) return;
   Serial.print(c);
-  Serial.print("\r\n");
+  Serial.print(F("\r\n"));
 }
 
 
