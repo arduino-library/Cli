@@ -28,6 +28,7 @@
 #ifndef __CLI_H_
 #define __CLI_H_
 
+#include <Arduino.h>
 
 #define CLI_NUM_CMD         14   // Number of cli commands
 #define CLI_NUM_ARG          3   // Number of cli arguments
