@@ -41,11 +41,12 @@ CliClass Cli;
 
 
 
-void CliClass::init (uint32_t serialBaud)
+void CliClass::init (uint32_t serialBaud, bool echo)
 {
   int i;
   this->numCmds = 0;
   this->initialized = true;
+  this->echo = echo;
 
   for (i = 0; i < CLI_NUM_ARG; i++) {
     this->argv[i] = this->argBuf[i];
@@ -73,7 +74,7 @@ int CliClass::newCmd (const char *name, const char *description, int(*function)(
 }
 
 
-int CliClass::getCmd (void)
+int CliClass::getCmd ()
 {
   char c;
   int i;
@@ -82,12 +83,14 @@ int CliClass::getCmd (void)
   c = (char)(xgetchar() & 0x000000FF);
 
   // Echo
-  if (-1 != (int)c) {
-    if (c == '\n' || c == '\r') {
-      xputs("");
-    }
-    else {
-      xputchar(c);
+  if (this->echo) {
+    if (-1 != (int)c) {
+      if (c == '\n' || c == '\r') {
+        xputs("");
+      }
+      else {
+        xputchar(c);
+      }
     }
   }
 

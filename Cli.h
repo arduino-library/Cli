@@ -59,7 +59,8 @@ class CliClass
      * Note: this function calls Serial.begin
      */
     void init (
-      uint32_t serialBaud // Serial Baud rate
+      uint32_t serialBaud,   // Serial Baud rate
+      bool     echo = false  // Enable echo
       );
 
     /*
@@ -118,6 +119,7 @@ class CliClass
     enum {START, DISCARD_LEADING_SPACES, CAPTURE_STRING, DISCARD_TRAILING_SPACES, EVALUATE} state = START; // State
     int argc = 0;                          // Number of arguments
     int idx = 0;                           // Character index
+    bool echo = false;                     // Enable echo
 };
 
 
