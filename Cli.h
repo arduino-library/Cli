@@ -59,8 +59,9 @@ class CliClass
      * Note: this function calls Serial.begin
      */
     void init (
-      uint32_t serialBaud,   // Serial Baud rate
-      bool     echo = false  // Enable echo
+      uint32_t serialBaud,    // Serial Baud rate
+      bool     echo = false,  // Enable echo
+      void(*helpCallback)(void) = nullptr  // Callback returns additional help text
       );
 
     /*
@@ -114,6 +115,7 @@ class CliClass
     int numCmds;                           // Total number of commands
     bool initialized = false;              // Initialization status
     char printfBuf[CLI_PRINTF_BUF_SIZE];   // Temporary buffer used by xprintf();
+    void(*helpCallback)(void);             // Callback returns additional help text
 
     // The following parameters are used by getCmd ()
     enum {START, DISCARD_LEADING_SPACES, CAPTURE_STRING, DISCARD_TRAILING_SPACES, EVALUATE} state = START; // State

@@ -41,12 +41,13 @@ CliClass Cli;
 
 
 
-void CliClass::init (uint32_t serialBaud, bool echo)
+void CliClass::init (uint32_t serialBaud, bool echo, void(*helpCallback)(void))
 {
   int i;
   this->numCmds = 0;
   this->initialized = true;
   this->echo = echo;
+  this->helpCallback = helpCallback;
 
   for (i = 0; i < CLI_NUM_ARG; i++) {
     this->argv[i] = this->argBuf[i];
@@ -201,6 +202,12 @@ void CliClass::showHelp (void)
   //sortCmds ();
 
   xputs ("");
+
+  if (helpCallback != nullptr) {
+    helpCallback();
+    xputs("");
+  }
+
   Serial.println(F("Commands:"));
 
   // Display commands
