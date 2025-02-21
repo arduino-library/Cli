@@ -181,7 +181,7 @@ void CliClass::showHelp (void)
   int numCmds = 0;
   int len = 0;
 
-  if (!initialized) return EXIT_FAILURE;
+  if (!initialized) return;
 
   for (i = 0; i < this->numCmds && (i < CLI_NUM_CMD); i++) {
 
