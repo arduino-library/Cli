@@ -9,7 +9,7 @@
  *   http://www.github.com/microfarad-de
  *   http://www.github.com/arduino-library
  *
- * Copyright (C) 2019 Karim Hraibi (khraibi at gmail.com)
+ * Copyright (C) 2025 Karim Hraibi (khraibi at gmail.com)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
