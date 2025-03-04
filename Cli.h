@@ -105,23 +105,20 @@ class CliClass
 
 
   private:
-
     void textPadding (char c, int size);                              // Insert repeated sequence of characters
     void textPrintBlock (const char *text, int lineSize, int offset); // Print a formatted block of text
-
-    char argBuf[CLI_NUM_ARG][CLI_ARG_LEN]; // Array of charactars for commands and arguments
-    char *argv[CLI_NUM_ARG];               // Array of pointers to argument strings
     CliCmd_s cmd[CLI_NUM_CMD];             // Array of commands
-    int numCmds;                           // Total number of commands
-    bool initialized = false;              // Initialization status
-    char printfBuf[CLI_PRINTF_BUF_SIZE];   // Temporary buffer used by xprintf();
     void(*helpCallback)(void);             // Callback returns additional help text
-
-    // The following parameters are used by getCmd ()
-    enum {START, DISCARD_LEADING_SPACES, CAPTURE_STRING, DISCARD_TRAILING_SPACES, EVALUATE} state = START; // State
+    char *argv[CLI_NUM_ARG];               // Array of pointers to argument strings
     int argc = 0;                          // Number of arguments
     int idx = 0;                           // Character index
+    enum {START, DISCARD_LEADING_SPACES, CAPTURE_STRING, DISCARD_TRAILING_SPACES, EVALUATE} state = START; // State
+    bool initialized = false;              // Initialization status
     bool echo = false;                     // Enable echo
+    char argBuf[CLI_NUM_ARG][CLI_ARG_LEN]; // Array of charactars for commands and arguments
+    char printfBuf[CLI_PRINTF_BUF_SIZE];   // Temporary buffer used by xprintf();
+    unsigned char numCmds;                 // Total number of commands
+    unsigned char indent = 0;              // For indentation
 };
 
 

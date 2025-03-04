@@ -32,9 +32,7 @@
 #include "Cli.h"
 
 
-#define TEXT_LINE_SIZE  70        // Sets the maximum text line size
-#define INDENT          15        // Help text block indentation
-
+#define TEXT_LINE_SIZE  50        // Sets the maximum text line size
 
 
 CliClass Cli;
@@ -70,6 +68,10 @@ int CliClass::newCmd (const char *name, const char *description, int(*function)(
   this->cmd[this->numCmds].doc = description;
   this->cmd[this->numCmds].fct = function;
   this->numCmds++;
+  size_t len = strlen(name) + 5;
+  if (len > this->indent) {
+    this->indent = len;
+  }
 
   return EXIT_SUCCESS;
 }
@@ -77,9 +79,9 @@ int CliClass::newCmd (const char *name, const char *description, int(*function)(
 
 int CliClass::getCmd ()
 {
-  char c;
   int i;
   int rv;
+  char c;
 
   c = (char)(xgetchar() & 0x000000FF);
 
@@ -188,8 +190,13 @@ void CliClass::showHelp (void)
       // Search for duplicate commands
       duplicate = false;
       for (j = 0; j < i; j++) {
-          if (this->cmd[i].fct == this->cmd[j].fct)
+          if (this->cmd[i].fct == this->cmd[j].fct) {
               duplicate = true;
+              size_t len = strlen(this->cmd[i].str) + strlen(this->cmd[j].str) + 3 + 5;
+              if (len > indent) {
+                indent = len;
+              }
+          }
       }
       // Do not show the same command twice
       if (!duplicate) {
@@ -239,15 +246,15 @@ void CliClass::showHelp (void)
       len += 1;
     }
 
-    textPadding(' ', INDENT - len - 2);
+    textPadding(' ', indent - len - 2);
     Serial.print(F(": "));
-    textPrintBlock(cmd[i]->doc, TEXT_LINE_SIZE, INDENT);
+    textPrintBlock(cmd[i]->doc, TEXT_LINE_SIZE, indent);
   }
 
   Serial.print(F("  h"));
-  textPadding(' ', INDENT - 3 - 2);
+  textPadding(' ', indent - 3 - 2);
   Serial.print(F(": "));
-  textPrintBlock("Help", TEXT_LINE_SIZE, INDENT);
+  textPrintBlock("Help", TEXT_LINE_SIZE, indent);
   xputs("");
 }
 
@@ -298,8 +305,8 @@ void CliClass::textPrintBlock (const char *text, int lineSize, int offset)
     // remove trailing spaces
     while (*c == ' ' || *c == '\t') c++;
 
-    // remove one line-break
-    if (*c == '\r' || *c == '\n') c++;
+    // remove line-break
+    while (*c == '\r' || *c == '\n') c++;
 
     // add new-line and padding
     if (*c != 0) {
