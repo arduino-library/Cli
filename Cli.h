@@ -30,7 +30,7 @@
 
 #include <Arduino.h>
 
-#define CLI_NUM_CMD         15   // Number of cli commands
+#define CLI_NUM_CMD         16   // Number of cli commands
 #define CLI_NUM_ARG          3   // Number of cli arguments
 #define CLI_ARG_LEN          8   // Maximum argument length
 #define CLI_PRINTF_BUF_SIZE 40   // Size of the printf buffer
